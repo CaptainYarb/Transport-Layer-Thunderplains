@@ -1,0 +1,17 @@
+{
+  "name": "thunder_plains_transit_layer",
+  "version": "1.0.0",
+  "description": "Simple web server to serve slides to browser",
+  "main": "server.js",
+  "dependencies": {
+    "connect": "3.4.0",
+    "open": "0.0.5",
+    "serve-static": "^1.10.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jonathan Yarbor",
+  "license": "ISC"
+}

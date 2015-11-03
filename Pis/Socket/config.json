@@ -1,0 +1,8 @@
+{
+	"host": "192.168.1.200",
+	"port": 23225,
+	"localAddress": "192.168.1.200",
+	"publicKey": 	"8cRGTCP59q28o8WaNUJY-ohOXRquiu7wSt90aBZRf",
+	"privateKey": 	"7qf71UU7uhrKMb9mvIo2-qQZIUoTYxUnlua3FtYdJ",
+	"authKey":		"eAVHz2Gr71Y9lbeQCYu0-tf1lw6fxOorLWX4YQcip"
+}

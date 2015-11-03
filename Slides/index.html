@@ -1,0 +1,416 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<title>Using Node.js to Build your Transport Layer - Thunderplains 2015</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=792, user-scalable=no">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,400italic' rel='stylesheet' type='text/css' />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="assets/shower/themes/bright/styles/screen.css" />
+	<link rel="stylesheet" href="assets/highlight/styles/default.css">
+	<link rel="stylesheet" href="assets/style.css" />
+</head>
+<body class="list">
+	<header id="header" class="caption">
+		<img src="assets/images/thunderplains.png" id="thunderplains" />
+		<h1>Using Node.js to Build your Transport Layer</h1>
+		<p>Jonathan Yarbor - <a href="https://twitter.com/blazedd" target="_blank">@Blazedd</a></p>
+	</header>
+	<section class="slide" id="cover"><div>
+		<h1>Using Node.js to Build your Transport Layer</h1>
+		<p>Jonathan Yarbor</p>
+	</div></section>
+	<section class="slide" id="whoami"><div>
+		<h2>#whoami</h2>
+		<img src="/assets/images/jon.png" alt="This is me!" id="me" />
+		<h4>Jonathan Yarbor</h4>
+		<p>CTO at NodeCraft Hosting LLC</p>
+		<p>Javascript Developer | Online &amp; Tabletop Gamer</p>
+		<ul>
+			<li><i class="fa fa-twitter"></i> <a href="https://twitter.com/blazedd" target="_blank">@Blazedd</a></li>
+			<li><i class="fa fa-github"></i> <a href="https://github.com/blazedd" target="_blank">github.com/Blazedd</a></li>
+		</ul>
+	</div></section>
+	<section class="slide"><div>
+		<h2>What is a "Transport Layer"?</h2>
+		<figure>
+			<blockquote>
+				<p>In computer networking, a transport layer provides end-to-end or host-to-host communication services for applications within a layered architecture of network components and protocols. The transport layer provides services such as connection-oriented data stream support, reliability, flow control, and multiplexing.</p>
+			</blockquote>
+			<figcaption style="text-align: right;">- Wikipedia</figcaption>
+		</figure>
+	</div></section>
+	<section class="slide"><div>
+		<h2>What is a "Transport Layer"?</h2>
+		<div style="width: 465px; height: 240px; margin:0 auto 0.5em;">
+			<img src="assets/images/app-talk.png" class="real">
+		</div>
+		<p style="text-align:center; font-size: 22px">TL;DR <strong>How do your applications securely &amp; reliably talk to each other?</strong></p>
+	</div></section>
+	<section class="slide" id="nodecraft"><div>
+		<h2>WTF is ... NodeCraft?</h2>
+		<ul>
+			<li>"Heroku for Gameservers"</li>
+			<li>Game Server Host
+				<ul>
+					<li>We host the hardware, network, and files for game servers</li>
+					<li>We provide a simple way to manage your servers</li>
+				</ul>
+			</li>
+			<li>Basically an overly complex process daemon manager similar to "pm2" ... but for game servers</li>
+		</ul>
+	</div></section>
+	<section class="slide" id="earth"><div>
+		<h2>Challenges: Remote Networks</h2>
+		<ul>
+			<li>Multiple datacenters around the globe, with plans for further expansion
+				<ul>
+					<li>4 North America Datacenters</li>
+					<li>2 Europe Datacenters</li>
+				</ul>
+			</li>
+			<li>Handling latency</li>
+			<li>Building Service Discovery</li>
+		</ul>
+	</div></section>
+	<section class="slide" id="persistence"><div>
+		<h2>Challenges: Persistence</h2>
+		<ul>
+			<li>Detect faults in network quality or applications within seconds</li>
+			<li>Customers can be automatically made aware of issues and resolution</li>
+			<li>No complex external monitoring or false alerts</li>
+			<li>Realtime status of the entire network</li>
+		</ul>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Challenges: Output Monitoring</h2>
+		<ul>
+			<li>Monitoring each line of output from every game server for events</li>
+			<li>Stream to the browser in less than 200 ms total time</li>
+			<li>Process thousands of lines per second to prevent runaway</li>
+		</ul>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Challenges: Volume &amp; Stats</h2>
+		<div style="text-align:center; width: 783px; height: 325px;">
+			<img src="assets/images/newrelic.png" class="real" />
+		</div>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Challenges: Volume &amp; Stats</h2>
+		<iframe src="http://198.24.167.154:36066/rps.html" width="100%" height="100%" id="stats">
+			<h5>If you are reading this one of the following is true:</h5>
+			<ul>
+				<li>Your browser doesn't support iframes?</li>
+				<li>I have fallen out of favor with the conference wifi gods</li>
+				<li>I'm a <s>mediocre</s> <strong>Javascript</strong> developer; my stat collecting app crashed</li>
+			</ul>
+		</iframe>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Transport Layer Goals</h2>
+		<ul>
+			<li class="next">Guarantee of Delivery</li>
+			<li class="next">Security</li>
+			<li class="next">Service Discovery</li>
+			<li class="next">Fault Tolerant</li>
+			<li class="next">Performant</li>
+			<li class="next">Low Profile Client</li>
+			<li class="next">Built with Node.js</li>
+		</ul>
+	</div></section>
+	<section class="slide"><div>
+		<h2>What can I <strong>build</strong>, using Node.js?</h2>
+		<ul>
+			<li class="next">TCP
+				<ul>
+					<li class="next">REST API</li>
+					<li class="next">Websockets</li>
+					<li class="next">(build your own TCP network)</li>
+				</ul>
+			</li>
+			<li class="next">UDP</li>
+			<li class="next">File Sockets (Unix domain sockets)</li>
+		</ul>
+	</div></section>
+	<section class="slide"><div>
+		<h2>What can I <strong>interface</strong> with Node.js?</h2>
+		<ul>
+			<li class="next">Ømq <span class="next">(ZeroMQ)</span></li>
+			<li class="next">RabbitMQ</li>
+			<li class="next">Commercial Services
+				<ul>
+					<li>Firebase</li>
+					<li>PubNub</li>
+					<li>Pusher</li>
+				</ul>
+			</li>
+		</ul>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Building a REST network</h2>
+		<img src="/assets/images/rest.png" class="fitme" />
+	</div></section>
+	<section class="slide"><div>
+		<h2>Building a REST network</h2>
+		<table>
+			<tr>
+				<th scope="col">Guarantee of Delivery</th>
+				<td class="great">Great</td>
+			</tr>
+			<tr>
+				<th scope="col">Security</th>
+				<td class="poor">Poor*</td>
+			</tr>
+			<tr>
+				<th scope="col">Service Discovery</th>
+				<td class="poor">Poor</td>
+			</tr>
+			<tr>
+				<th scope="col">Fault Tolerant</th>
+				<td class="great">Great</td>
+			</tr>
+			<tr>
+				<th scope="col">Performant</th>
+				<td class="poor">Poor*</td>
+			</tr>
+			<tr>
+				<th scope="col">Low Profile Client</th>
+				<td class="great">Great</td>
+			</tr>
+		</table>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Building a REST network</h2>
+		<table>
+			<tr>
+				<th scope="col">Pros</th>
+				<th>Cons</th>
+			</tr>
+			<tr>
+				<td><ul>
+					<li>Easier to Develop</li>
+					<li>Use any Client in any language</li>
+					<li>Pre-defined protocol</li>
+					<li>Browser Support</li>
+					<li>Web sockets!</li>
+				</ul></td>
+				<td><ul>
+					<li>Slower</li>
+					<li>Difficult to build discovery</li>
+					<li>Difficult to make event driven</li>
+					<li>Difficult to scale</li>
+					<li>More attack vectors</li>
+				</ul></td>
+			</tr>
+		</table>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Publish / Subscribe</h2>
+		<ul>
+			<li>Realtime (connection) status of entire network</li>
+			<li>Identity secured on connection</li>
+			<li>Encryption unique to each client</li>
+			<li>Multi-Master</li>
+			<li>Less overhead on the client</li>
+		</ul>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Using UDP with Node.js</h2>
+		<img src="/assets/images/udp.png" class="fitme" />
+	</div></section>
+	<section class="slide"><div>
+		<h2>Using UDP with Node.js</h2>
+		<table>
+			<tr>
+				<th scope="col">Guarantee of Delivery</th>
+				<td class="poor">BAD</td>
+			</tr>
+			<tr>
+				<th scope="col">Security</th>
+				<td class="great">Good</td>
+			</tr>
+			<tr>
+				<th scope="col">Service Discovery</th>
+				<td class="poor">Poor</td>
+			</tr>
+			<tr>
+				<th scope="col">Fault Tolerant</th>
+				<td class="poor">Poor</td>
+			</tr>
+			<tr>
+				<th scope="col">Performant</th>
+				<td class="great">Perfect</td>
+			</tr>
+			<tr>
+				<th scope="col">Low Profile Client</th>
+				<td class="great">Good</td>
+			</tr>
+		</table>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Using UDP with Node.js</h2>
+		<table>
+			<tr>
+				<th scope="col">Pros</th>
+				<th>Cons</th>
+			</tr>
+			<tr>
+				<td style="width:50%"><ul>
+					<li>Fastest</li>
+					<li>Lightweight*</li>
+					<li>Security &amp; Discovery built in</li>
+				</ul></td>
+				<td><ul>
+					<li><strong>No guarantee of delivery</strong></li>
+					<li>Ultra-Hardmode to Develop</li>
+					<li>Bring your own protocol, connection handshake, and pretty much everything</li>
+					<li>Must build client connections</li>
+					<li>Encryption will be slow</li>
+				</ul></td>
+			</tr>
+		</table>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Using Node.js with TCP</h2>
+		<img src="/assets/images/tcp.png" class="fitme" />
+	</div></section>
+	<section class="slide"><div>
+		<h2>Using TCP with Node.js</h2>
+		<table>
+			<tr>
+				<th scope="col">Guarantee of Delivery</th>
+				<td class="great">Great</td>
+			</tr>
+			<tr>
+				<th scope="col">Security</th>
+				<td class="great">Great</td>
+			</tr>
+			<tr>
+				<th scope="col">Service Discovery</th>
+				<td class="great">Great</td>
+			</tr>
+			<tr>
+				<th scope="col">Fault Tolerant</th>
+				<td class="great">Great</td>
+			</tr>
+			<tr>
+				<th scope="col">Performant</th>
+				<td class="great">Great</td>
+			</tr>
+			<tr>
+				<th scope="col">Low Profile Client</th>
+				<td class="great">Great</td>
+			</tr>
+		</table>
+		<div id="greeeeeat" class="next"></div>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Using TCP with Node.js</h2>
+		<table>
+			<tr>
+				<th scope="col">Pros</th>
+				<th>Cons</th>
+			</tr>
+			<tr>
+				<td><ul>
+					<li>Faster</li>
+					<li>Lightweight*</li>
+					<li>Security &amp; Discovery built in</li>
+					<li>Simple to Scale</li>
+					<li class="next">Bonus: File Sockets share code</li>
+				</ul></td>
+				<td><ul>
+					<li>Difficult to Develop</li>
+					<li>BYOP <small>(Bring Your Own Protocol)</small></li>
+					<li>Must build client connections</li>
+					<li>Encryption will be slow</li>
+				</ul></td>
+			</tr>
+		</table>
+	</div></section>
+	<section class="slide shout"><div>
+		<h2>Lets look at code!</h2>
+	</div></section>
+	<section class="slide" id="ricochet"><div>
+		<h2>Our Solution</h2>
+		<h4><code>npm install ricochet</code></h4>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Ricochet</h2>
+		<ul>
+			<li>Multi-Tenant Server</li>
+			<li>Pub/Sub via "channels"</li>
+			<li>Functions on simple event emitters</li>
+			<li>Two payload types: Message &amp; Request
+				<ul>
+					<li>Messages are one way and expect no response</li>
+					<li>Request expect a reply &amp; have optional updates</li>
+				</ul>
+			</li>
+		</ul>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Ricochet: Publish</h2>
+		<pre class="pushup">
+			<code class="javascript">var client = new ricochet.Client();
+client.connect(config)
+// handle new file to download
+var request = client.request('some_channel', 'file.download', {
+	file: 'http://thunderplainsconf.com/images/logo-header.png'
+});
+request.on('update', function(data){
+	console.log('Download Progress', data.progress); // or update a socket
+});
+download.on('response', function(err, data){
+	if(err){ return console.error('Failed to download', err); }
+	console.log('File downloaded!', data.output);
+});
+			</code>
+		</pre>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Ricochet: Subscribe</h2>
+		<pre class="pushup">
+			<code class="javascript">var client = new ricochet.Client();
+client.connect(config)
+// handle new file to download
+client.handles.on('file.download', function(data, handler){
+	var download = wget.download(data.file);
+	download.on('progress', function(progress){
+		handler.emit('update', {progress: progress});
+	});
+	download.on('end', function(output){
+		handler.emit('response', {output: output});
+	});
+});
+			</code>
+		</pre>
+	</div></section>
+	<section class="slide shout"><div>
+		<h2>Demo Time!</h2>
+	</div></section>
+	<section class="slide shout"><div>
+		<h2>Questions?</h2>
+		<h4>These slides and links are available on:<br/>Github.com/blazedd</h4>
+	</div></section>
+	<div class="progress"><div></div></div>
+	<script src="assets/shower/shower.min.js"></script>
+	<script src="assets/highlight/highlight.pack.js"></script>
+	<script type="text/javascript">
+	 hljs.initHighlightingOnLoad();
+	 document.addEventListener("DOMContentLoaded", function(){
+	 	var video = document.getElementById('consoleVideo');
+		video.onclick = function(){
+			if (video.paused) {
+				video.play();
+			} else {
+				video.pause();
+			}
+		}
+
+	 });
+	</script>
+</body>
+</html>

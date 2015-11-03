@@ -1,0 +1,19 @@
+{
+  "name": "pi-server",
+  "version": "0.1.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jonathan Yarbor",
+  "license": "ISC",
+  "dependencies": {
+    "async": "1.5.0",
+    "johnny-five": "0.9.1",
+    "lodash": "3.10.1",
+    "npid": "^0.4.0",
+    "raspi-io": "5.0.0",
+    "ricochet": "0.3.0"
+  }
+}

@@ -1,0 +1,144 @@
+{
+	"server": {
+		"host": "192.168.1.200",
+		"port": 23225
+	},
+	"serverClient": {
+		"localAddress": "192.168.1.200",
+		"publicKey": 	"vfzjF3CvzAcAg4HwWSbagay6-t35CKDypqVkUfjCgGTyZHLER",
+		"privateKey": 	"qSZqVZqPEqxPSxY6vczpUQYx-wqXN8kmuEnHsK6Ng8fhfnxSa",
+		"authKey": 		"dnyZHhWRL5GKHRbaUWcKFRkc-P7x4NrjWR96KGFheWuqSxzjJ"
+	},
+	"db": [
+		{
+			"channel":		"server",
+			"ip": 			"192.168.1.200",
+			"groups": 		["pi", "sockets"],
+			"publicKey": 	"vfzjF3CvzAcAg4HwWSbagay6-t35CKDypqVkUfjCgGTyZHLER",
+			"privateKey": 	"qSZqVZqPEqxPSxY6vczpUQYx-wqXN8kmuEnHsK6Ng8fhfnxSa",
+			"authKey": 		"dnyZHhWRL5GKHRbaUWcKFRkc-P7x4NrjWR96KGFheWuqSxzjJ"
+		},
+		{
+			"channel":		"r1",
+			"ip": 			"192.168.1.201",
+			"groups": 		["pi"],
+			"publicKey": 	"Eqw8jVu2a7btdL9rsKyQbqF6-ThHJM2P4G5FnxRJhyjRsgbu5",
+			"privateKey": 	"rdCjOHwyPOkYeptUuK0sLz8X-ivn3EIAQvzkUHkgSsyo2hm6W",
+			"authKey": 		"VMpPEK6CJtDk5CPgfJS7vDxv-BvtLVtSeRLxMVXAJxSpjz27p"
+		},
+		{
+			"channel": 		"r2",
+			"ip": 			"192.168.1.202",
+			"groups": 		["pi"],
+			"publicKey": 	"ATDzHgd22JCkrDsrnFUQNVdC-gK8utatpWGN57AkhV5AUUNEV",
+			"privateKey": 	"kkaau5H92JbukC4Xm6u2NxWF-rPwq8jZvJkFTCVhKkRunF5M3",
+			"authKey": 		"7eQqDk79jLVfuqccnNNCXyT9-fUGkheMTnVNFkTyWjJEsGRRC"
+		},
+		{
+			"channel": 		"r3",
+			"ip": 			"192.168.1.203",
+			"groups": 		["pi"],
+			"publicKey": 	"AQfjMs3b2v2TKTBn7FaeLzGb-ERBhQFTS9mYkwSXrthrWMz3d",
+			"privateKey": 	"L7JKnm7crCKP765HCgDaNvNk-JMXt9xKVewSzAKNNYtzwbgp3",
+			"authKey": 		"fxrAe48qEQcEN6Nea6m568uq-hxAZMycz66PuLuBX58pKV93K"
+		},
+		{
+			"channel": 		"r4",
+			"ip": 			"192.168.1.204",
+			"groups": 		["pi"],
+			"publicKey": 	"mEsyfL3UKsLgQ5rGak7qWHqa-hnAF2x9MhmAbTdDd7j5LU9tF",
+			"privateKey": 	"gzCFMHfvuzuR29hpGdPrq6PT-mTcjtENzf6GpvdBHWsfJjtUr",
+			"authKey": 		"PKYGUvZGfyV35h9GVFAvH4LJ-LBLh7ZQLLuGU32XMEr5s2p98"
+		},
+		{
+			"channel": 		"laptop",
+			"ip": 			"192.168.1.205",
+			"groups": 		["pi", "sockets"],
+			"publicKey": 	"hEpsrHbAeZa4KLMpVYqCAhP2-ECUYprXzk2StTDCe8RSAefY9",
+			"privateKey": 	"7PBFGG4YsFEgaGRmTDWT7BnN-txVCXaCQvKD52BNLQvkBsQpK",
+			"authKey": 		"6aD8bqy9hcKewtA63GE7geKt-aXkDPxzYe5svVr4wcUfS7skh"
+		},
+		{
+			"channel": 		"socket",
+			"ip": 			"192.168.1.200",
+			"groups": 		["pi", "sockets"],
+			"publicKey": 	"8cRGTCP59q28o8WaNUJY-ohOXRquiu7wSt90aBZRf",
+			"privateKey": 	"7qf71UU7uhrKMb9mvIo2-qQZIUoTYxUnlua3FtYdJ",
+			"authKey":		"eAVHz2Gr71Y9lbeQCYu0-tf1lw6fxOorLWX4YQcip"
+		}
+	],
+	"patterns": {
+		"server.ready": [
+			"00100100",
+			"00100100",
+			"11111111",
+			"00100100",
+			"00100100",
+			"11111111",
+			"11111111",
+			"11111111"
+		]
+	},
+	"status": {
+		"server": [
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			"11111111",
+			"11111111"
+		],
+		"socket": [
+			null,
+			null,
+			null,
+			null,
+			"00111100",
+			"01000010",
+			null,
+			null
+		],
+		"r1": [
+			"01111111",
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null
+		],
+		"r2": [
+			null,
+			"00111111",
+			null,
+			null,
+			null,
+			null,
+			null,
+			null
+		],
+		"r3": [
+			null,
+			null,
+			"00011111",
+			null,
+			null,
+			null,
+			null,
+			null
+		],
+		"r4": [
+			null,
+			null,
+			null,
+			"00001111",
+			null,
+			null,
+			null,
+			null
+		]
+	}
+}

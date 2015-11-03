@@ -1,0 +1,26 @@
+body{
+	margin:0;
+	padding: 0;
+	background: #000;
+}
+
+#matrix .row{
+	width: 765px;
+	margin: 0 auto;
+	display: block;
+	padding: 0 5px;
+	text-align: center;
+	background: #1F1F1F;
+}
+#matrix .row .dot{
+	background: #666;
+	display: inline-block;
+	height: 70px;
+	width: 70px;
+	margin: 10px;
+	border-radius: 100%;
+}
+#matrix .row .dot.active{
+	background-color: red;
+	/*box-shadow: 0 0 45px 10px red;*/
+}
